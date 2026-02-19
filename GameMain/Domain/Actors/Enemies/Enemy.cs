@@ -18,7 +18,7 @@ public abstract class Enemy : Actor
     public override float MaxFallSpeed => ActorState.MaxFallSpeed;
     public abstract int XPdrop { get; }
     public virtual float SightRange { get; protected set; } = 300f;
-    public float PatrolRange { get; protected set; } = 100f;
+   
     public IEnemyState EnemyState { get; protected set; }
     public override int HealthPoints
     {
@@ -26,7 +26,7 @@ public abstract class Enemy : Actor
         set => ActorState.HealthPoints = value;
     }
     public bool IsGrounded { get; private set; } = false;
-    public float MaxHealthPoints { get; private set; }
+   
 
     //healtbar
 
@@ -167,33 +167,8 @@ public abstract class Enemy : Actor
     CurrState = MovStates.Moving;
     }
 
-    internal bool IsOnWall(Tile[,] map, double levelWidth)
-    {
-        List<Tile> nearbyTiles = GetNearbySolidTiles(map, 1);
+   
+        
 
-        foreach (var tile in nearbyTiles)
-        {
-            if (tile == null) continue;
-
-            // Prüfen, ob wir eine Kollision an der Seite haben
-            Rectangle enemyRect = new Rectangle((int)Pos.X, (int)Pos.Y, Width, Height);
-            Rectangle tileRect = new Rectangle((int)tile.Pos.X, (int)tile.Pos.Y, tile.Width, tile.Height);
-
-            if (enemyRect.Intersects(tileRect))
-            {
-                // Bestimmen, ob die Kollision links oder rechts ist
-                if (Pos.X < tile.Pos.X && Direction == Directions.Right)
-                {
-                    return true; // Kollision rechts
-                }
-                else if (Pos.X > tile.Pos.X && Direction == Directions.Left)
-                {
-                    return true; // Kollision links
-                }
-            }
-        }
-
-        // Keine Wandkollision festgestellt
-        return false;
-    }
+    
 }
